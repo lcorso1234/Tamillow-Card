@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #2b3337;
+  --background: #353e43;
   --foreground: #f4f4f5;
 }
 
@@ -25,8 +25,53 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 0.8px, transparent 0.8px);
+  background-size: 2px 2px;
   opacity: 0.35;
   pointer-events: none;
+  mix-blend-mode: screen;
   z-index: -1;
+}
+
+@keyframes cta-jiggle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  8% {
+    transform: translate3d(1px, -1px, 0) rotate(-0.8deg) scale(1.01);
+  }
+  16% {
+    transform: translate3d(-1px, 1px, 0) rotate(0.8deg) scale(1.01);
+  }
+  24% {
+    transform: translate3d(0.5px, -0.5px, 0) rotate(-0.5deg);
+  }
+  32% {
+    transform: translate3d(-0.5px, 0.5px, 0) rotate(0.5deg);
+  }
+  40% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+.cta-wiggle {
+  animation: cta-jiggle 4.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-wiggle {
+    animation: none;
+  }
 }

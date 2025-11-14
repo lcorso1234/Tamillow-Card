@@ -33,7 +33,7 @@ export default function Home() {
               You dictate the goal, and I help you shape it along the way.
             </p>
           </div>
-          <div className="rounded-3xl border border-white/20 bg-white/5 p-6 backdrop-blur">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-black/40 to-black/30 p-6 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.55)]">
             <p className="text-sm uppercase tracking-[0.4em] text-zinc-400">
               Contact
             </p>
@@ -65,11 +65,13 @@ export default function Home() {
               </div>
             </div>
             <a
-              className="mt-8 flex h-14 items-center justify-center rounded-2xl border border-white bg-white text-black transition hover:bg-transparent hover:text-white"
+              className="cta-wiggle group mt-8 flex h-14 items-center justify-center rounded-2xl border border-white bg-white text-black transition hover:bg-transparent hover:text-white active:scale-[0.98]"
               href={CTA_LINK}
               download="maureen-tamillow.vcf"
             >
-              Save Contact
+              <span className="transition group-active:translate-y-[1px]">
+                Save Contact
+              </span>
             </a>
           </div>
         </div>
