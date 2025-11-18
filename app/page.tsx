@@ -1,3 +1,5 @@
+import SaveContactButton from "./components/SaveContactButton";
+
 const CONTACT_NAME = "Maureen Tamillow";
 const CONTACT_ORG = "Tamillow Institute";
 const CONTACT_PHONE = "7082613028";
@@ -43,7 +45,7 @@ const CTA_LINK = `data:text/vcard;charset=utf-8,${VCARD}`;
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#090c0f] via-[#0f1417] to-[#181f25] text-white">
+    <div className="min-h-screen bg-[#2a3439] text-white">
       <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-between px-6 py-10">
         <div className="space-y-10">
           <div className="space-y-4 text-center">
@@ -112,15 +114,14 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <a
-                className="cta-wiggle group mt-8 flex flex-col items-center justify-center gap-1 rounded-2xl border border-[#39FF14] bg-[#39FF14] px-6 py-4 text-black shadow-[0_12px_35px_rgba(57,255,20,0.45)] transition hover:shadow-[0_18px_45px_rgba(57,255,20,0.55)] active:scale-[0.98]"
-                href={CTA_LINK}
-                download="maureen-tamillow.vcf"
-              >
-                <span className="text-lg font-semibold tracking-wide transition group-active:translate-y-[1px]">
-                  Save Contact
-                </span>
-              </a>
+              <SaveContactButton
+                vcardLink={CTA_LINK}
+                contactName={CONTACT_NAME}
+                contactOrg={CONTACT_ORG}
+                contactPhone={CONTACT_PHONE}
+                contactEmail={CONTACT_EMAIL}
+                locations={LOCATIONS}
+              />
             </div>
           </div>
         </div>
