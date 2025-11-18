@@ -63,14 +63,12 @@ export default function Home() {
                   You dictate the goal, and I help you shape it along the way.
                 </p>
               </div>
-              <div className="mt-8">
+              <div className="mt-8 flex justify-center">
                 <SaveContactButton
                   vcardLink={CTA_LINK}
                   contactName={CONTACT_NAME}
                   contactOrg={CONTACT_ORG}
                   contactPhone={CONTACT_PHONE}
-                  contactEmail={CONTACT_EMAIL}
-                  locations={LOCATIONS}
                 />
               </div>
               <div className="mt-10 text-center text-[0.65rem] italic tracking-[0.35em] text-zinc-400">

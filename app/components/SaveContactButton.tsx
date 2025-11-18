@@ -1,25 +1,14 @@
 'use client';
 
-type Location = {
-  label: string;
-  street: string;
-  suite: string;
-  city: string;
-  state: string;
-  postalCode: string;
-};
-
 type SaveContactButtonProps = {
   vcardLink: string;
   contactName: string;
   contactOrg: string;
   contactPhone: string;
-  contactEmail: string;
-  locations: Location[];
 };
 
-const formatDateForICS = (date: Date) =>
-  date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+const buildMessageTemplate = (contactName: string, contactOrg: string) =>
+  `Hello ${contactName} at ${contactOrg}! I just saved your contact from the Tamillow card and would love to connect.`;
 
 const triggerDownload = (href: string, filename: string, isDataUrl = true) => {
   const link = document.createElement('a');
@@ -35,54 +24,22 @@ const triggerDownload = (href: string, filename: string, isDataUrl = true) => {
   document.body.removeChild(link);
 };
 
+const openMessagingApp = (phoneNumber: string, message: string) => {
+  const encodedMessage = encodeURIComponent(message);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const separator = isIOS ? '&' : '?';
+  window.location.href = `sms:${phoneNumber}${separator}body=${encodedMessage}`;
+};
+
 export default function SaveContactButton({
   vcardLink,
   contactName,
   contactOrg,
   contactPhone,
-  contactEmail,
-  locations,
 }: SaveContactButtonProps) {
   const handleClick = () => {
     triggerDownload(vcardLink, 'maureen-tamillow.vcf');
-
-    const now = new Date();
-    const oneDayLater = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    const reminderEnd = new Date(oneDayLater.getTime() + 30 * 60 * 1000);
-
-    const locationLines = locations.map(
-      ({ label, street, suite, city, state, postalCode }) =>
-        `${label}: ${street} ${suite}, ${city}, ${state} ${postalCode}`,
-    );
-
-    const descriptionLines = [
-      `Saved contact for ${contactName}`,
-      contactOrg,
-      `Phone: ${contactPhone}`,
-      `Email: ${contactEmail}`,
-      'Locations:',
-      ...locationLines,
-    ];
-
-    const icsPayload = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Tamillow Institute//Contact Reminder//EN',
-      'BEGIN:VEVENT',
-      `UID:${now.getTime()}@tamillow-card`,
-      `DTSTAMP:${formatDateForICS(now)}`,
-      `DTSTART:${formatDateForICS(oneDayLater)}`,
-      `DTEND:${formatDateForICS(reminderEnd)}`,
-      `SUMMARY:Follow up with ${contactName}`,
-      `DESCRIPTION:${descriptionLines.join('\\n')}`,
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\r\n');
-
-    const blob = new Blob([icsPayload], { type: 'text/calendar' });
-    const url = URL.createObjectURL(blob);
-    triggerDownload(url, 'tamillow-contact-reminder.ics', false);
-    setTimeout(() => URL.revokeObjectURL(url), 0);
+    openMessagingApp(contactPhone, buildMessageTemplate(contactName, contactOrg));
   };
 
   return (
@@ -95,7 +52,7 @@ export default function SaveContactButton({
         Save Contact
       </span>
       <span className="text-xs uppercase tracking-[0.35em] text-black/60 group-active:translate-y-[1px]">
-        + Calendar Reminder
+        + Text Tamillow
       </span>
     </button>
   );
