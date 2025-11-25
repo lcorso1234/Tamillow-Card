@@ -39,7 +39,10 @@ export default function SaveContactButton({
 }: SaveContactButtonProps) {
   const handleClick = () => {
     triggerDownload(vcardLink, 'maureen-tamillow.vcf');
-    openMessagingApp(contactPhone, buildMessageTemplate(contactName, contactOrg));
+    // Wait for the download to initiate before opening the messaging app
+    setTimeout(() => {
+      openMessagingApp(contactPhone, buildMessageTemplate(contactName, contactOrg));
+    }, 500);
   };
 
   return (
