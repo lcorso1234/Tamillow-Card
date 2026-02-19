@@ -3,45 +3,6 @@ import SaveContactButton from "./components/SaveContactButton";
 const CONTACT_NAME = "Maureen Tamillow";
 const CONTACT_ORG = "Tamillow Institute";
 const CONTACT_PHONE = "7082613028";
-const CONTACT_EMAIL = "info@maureentamillow.com";
-
-const LOCATIONS = [
-  {
-    label: "Oak Park",
-    street: "1101 Lake Street",
-    suite: "Suite #401",
-    city: "Oak Park",
-    state: "IL",
-    postalCode: "60301",
-  },
-  {
-    label: "Hinsdale",
-    street: "15 Salt Creek Ln",
-    suite: "Suite #401",
-    city: "Hinsdale",
-    state: "IL",
-    postalCode: "60521",
-  },
-];
-
-const VCARD = encodeURIComponent(
-  [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    `FN:${CONTACT_NAME}`,
-    `ORG:${CONTACT_ORG}`,
-    `TEL;TYPE=CELL:${CONTACT_PHONE}`,
-    `EMAIL;TYPE=INTERNET:${CONTACT_EMAIL}`,
-    "NOTE:Become Competent, Confident and Self-Aware.",
-    ...LOCATIONS.map(
-      ({ label, street, suite, city, state, postalCode }) =>
-        `ADR;TYPE=WORK;LABEL="${label}":;;${street} ${suite};${city};${state};${postalCode};USA`,
-    ),
-    "END:VCARD",
-  ].join("\n"),
-);
-
-const CTA_LINK = `data:text/vcard;charset=utf-8,${VCARD}`;
 
 export default function Home() {
   return (
@@ -65,7 +26,8 @@ export default function Home() {
               </div>
               <div className="mt-8 flex justify-center">
                 <SaveContactButton
-                  vcardLink={CTA_LINK}
+                  vcardLink="/api/tamillow-contact"
+                  vcardIsDataUrl={false}
                   contactName={CONTACT_NAME}
                   contactOrg={CONTACT_ORG}
                   contactPhone={CONTACT_PHONE}
